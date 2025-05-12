@@ -38,139 +38,46 @@ function FlightPricePredictor() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
-      <h1 className="text-3xl font-semibold text-blue-700 mb-8">Flight Price Prediction</h1>
+    <div className="min-h-screen bg-[#f2f2f2] flex flex-col items-center py-10 font-mono">
+      <h1 className="text-4xl font-bold text-black mb-10 underline decoration-2 decoration-blue-500 underline-offset-8">
+        Flight Price Prediction
+      </h1>
 
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded-lg p-8 w-full max-w-lg space-y-6">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white border-2 border-black shadow-[6px_6px_0px_#000] rounded-lg p-8 w-full max-w-lg space-y-6"
+      >
+        {/* Reusable Select Input */}
+        {[
+          { label: "Airline", name: "airline", options: ["SpiceJet", "AirAsia", "Vistara", "GO_FIRST", "Indigo", "Air_India"] },
+          { label: "Source City", name: "source_city", options: ["Delhi", "Mumbai", "Bangalore", "Kolkata", "Hyderabad", "Chennai"] },
+          { label: "Departure Time", name: "departure_time", options: ["Evening", "Early_Morning", "Morning", "Afternoon", "Night", "Late_Night"] },
+          { label: "Stops", name: "stops", options: ["zero", "one", "two_or_more"] },
+          { label: "Arrival Time", name: "arrival_time", options: ["Night", "Morning", "Early_Morning", "Afternoon", "Evening", "Late_Night"] },
+          { label: "Destination City", name: "destination_city", options: ["Delhi", "Mumbai", "Bangalore", "Kolkata", "Hyderabad", "Chennai"] },
+          { label: "Class", name: "class", options: ["Economy", "Business"] },
+        ].map(({ label, name, options }) => (
+          <div key={name} className="space-y-1 w-full">
+            <label className="block text-sm font-semibold text-black">{label}</label>
+            <select
+              name={name}
+              value={formData[name]}
+              onChange={handleChange}
+              className="block w-full px-4 py-2 border-2 border-black rounded-md shadow-[2px_2px_0px_#000] focus:outline-none focus:ring-2 focus:ring-black"
+            >
+              <option value="">Select {label}</option>
+              {options.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt.replaceAll('_', ' ')}
+                </option>
+              ))}
+            </select>
+          </div>
+        ))}
 
-        {/* Airline Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Airline</label>
-          <select
-            name="airline"
-            value={formData.airline}
-            onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          >
-            <option value="">Select Airline</option>
-            <option value="SpiceJet">SpiceJet</option>
-            <option value="AirAsia">AirAsia</option>
-            <option value="Vistara">Vistara</option>
-            <option value="GO_FIRST">GO_FIRST</option>
-            <option value="Indigo">Indigo</option>
-            <option value="Air_India">Air India</option>
-          </select>
-        </div>
-
-        {/* Source City Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Source City</label>
-          <select
-            name="source_city"
-            value={formData.source_city}
-            onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          >
-            <option value="">Select Source City</option>
-            <option value="Delhi">Delhi</option>
-            <option value="Mumbai">Mumbai</option>
-            <option value="Bangalore">Bangalore</option>
-            <option value="Kolkata">Kolkata</option>
-            <option value="Hyderabad">Hyderabad</option>
-            <option value="Chennai">Chennai</option>
-          </select>
-        </div>
-
-        {/* Departure Time Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Departure Time</label>
-          <select
-            name="departure_time"
-            value={formData.departure_time}
-            onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          >
-            <option value="">Select Departure Time</option>
-            <option value="Evening">Evening</option>
-            <option value="Early_Morning">Early Morning</option>
-            <option value="Morning">Morning</option>
-            <option value="Afternoon">Afternoon</option>
-            <option value="Night">Night</option>
-            <option value="Late_Night">Late Night</option>
-          </select>
-        </div>
-
-        {/* Stops Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Stops</label>
-          <select
-            name="stops"
-            value={formData.stops}
-            onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          >
-            <option value="">Select Stops</option>
-            <option value="zero">Zero</option>
-            <option value="one">One</option>
-            <option value="two_or_more">Two or More</option>
-          </select>
-        </div>
-
-        {/* Arrival Time Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Arrival Time</label>
-          <select
-            name="arrival_time"
-            value={formData.arrival_time}
-            onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          >
-            <option value="">Select Arrival Time</option>
-            <option value="Night">Night</option>
-            <option value="Morning">Morning</option>
-            <option value="Early_Morning">Early Morning</option>
-            <option value="Afternoon">Afternoon</option>
-            <option value="Evening">Evening</option>
-            <option value="Late_Night">Late Night</option>
-          </select>
-        </div>
-
-        {/* Destination City Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Destination City</label>
-          <select
-            name="destination_city"
-            value={formData.destination_city}
-            onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          >
-            <option value="">Select Destination City</option>
-            <option value="Delhi">Delhi</option>
-            <option value="Mumbai">Mumbai</option>
-            <option value="Bangalore">Bangalore</option>
-            <option value="Kolkata">Kolkata</option>
-            <option value="Hyderabad">Hyderabad</option>
-            <option value="Chennai">Chennai</option>
-          </select>
-        </div>
-
-        {/* Class Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Class</label>
-          <select
-            name="class"
-            value={formData.class}
-            onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
-          >
-            <option value="">Select Class</option>
-            <option value="Economy">Economy</option>
-            <option value="Business">Business</option>
-          </select>
-        </div>
-
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Flight Duration (hours)</label>
+        {/* Flight Duration */}
+        <div className="space-y-1 w-full">
+          <label className="block text-sm font-semibold text-black">Flight Duration (hours)</label>
           <input
             type="number"
             step="0.01"
@@ -178,39 +85,40 @@ function FlightPricePredictor() {
             value={formData.duration}
             onChange={handleChange}
             min="0"
-            placeholder="Enter flight duration (e.g., 2.25)"
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            placeholder="e.g., 2.5"
+            className="block w-full px-4 py-2 border-2 border-black rounded-md shadow-[2px_2px_0px_#000] focus:outline-none focus:ring-2 focus:ring-black"
           />
-          <p className="text-xs text-gray-500">Enter duration in decimal hours (e.g., 2.5 for 2 hours 30 minutes)</p>
+          <p className="text-xs text-gray-500">Use decimal hours (e.g., 2.5 for 2h 30m)</p>
         </div>
 
-        {/* Departure Date Field */}
-        <div className="space-y-2 w-full">
-          <label className="block text-sm font-medium text-gray-700">Departure Date</label>
+        {/* Departure Date */}
+        <div className="space-y-1 w-full">
+          <label className="block text-sm font-semibold text-black">Departure Date</label>
           <input
             type="date"
             name="departure_date"
             min={new Date().toISOString().split('T')[0]}
             value={formData.departure_date}
             onChange={handleChange}
-            className="block w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+            className="block w-full px-4 py-2 border-2 border-black rounded-md shadow-[2px_2px_0px_#000] focus:outline-none focus:ring-2 focus:ring-black"
           />
         </div>
 
         <button
           type="submit"
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition duration-300"
+          className="w-full bg-yellow-300 text-black font-bold py-2 rounded-md border-2 border-black shadow-[3px_3px_0px_#000] hover:scale-[1.02] transition-transform"
         >
-          Predict
+          Predict Price →
         </button>
       </form>
 
       {prediction !== null && (
-        <div className="mt-6 p-4 bg-green-100 rounded-lg text-green-700">
-          <h2 className="text-xl font-semibold">Your Flight Price: ₹{prediction}</h2>
+        <div className="mt-6 p-4 bg-lime-200 border-2 border-black shadow-[3px_3px_0px_#000] rounded-md text-black">
+          <h2 className="text-xl font-bold">Estimated Price: ₹{prediction}</h2>
         </div>
       )}
     </div>
+
   );
 }
 
